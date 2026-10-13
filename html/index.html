@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Biblioteca</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/script.js" defer></script>
+</head>
+<body>
+
+  <header class="topo">
+    <div class="container topo-conteudo">
+      <strong>Biblioteca Digital</strong>
+      <a href="#acervo">Ver acervo</a>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="banner">
+      <div>
+        <p>PROJETO HTML + CSS + JAVASCRIPT</p>
+        <h1>Controle de Biblioteca</h1>
+        <span>Cadastre, empreste e devolva livros.</span>
+      </div>
+      <div class="emoji">📚</div>
+    </section>
+
+    <div id="mensagem" class="mensagem" hidden></div>
+
+    <section class="estatisticas">
+      <div class="card">
+        <span>Livros cadastrados</span>
+        <h2 id="total">0</h2>
+      </div>
+
+      <div class="card">
+        <span>Disponíveis</span>
+        <h2 id="disponiveis">0</h2>
+      </div>
+
+      <div class="card">
+        <span>Emprestados</span>
+        <h2 id="emprestados">0</h2>
+      </div>
+    </section>
+
+    <section class="conteudo">
+
+      <div class="painel cadastro">
+        <h2>Cadastrar livro</h2>
+        <p>Adicione títulos ao acervo da biblioteca.</p>
+
+        <form id="formLivro">
+          <label for="titulo">Título</label>
+          <input
+            type="text"
+            id="titulo"
+            placeholder="Título do livro"
+            required
+          >
+
+          <label for="autor">Autor</label>
+          <input
+            type="text"
+            id="autor"
+            placeholder="Nome do autor"
+            required
+          >
+
+          <label for="categoria">Categoria</label>
+          <select id="categoria">
+            <option>Programação</option>
+            <option>Romance</option>
+            <option>Fantasia</option>
+            <option>Educação</option>
+            <option>Outros</option>
+          </select>
+
+          <button type="submit">Cadastrar livro</button>
+        </form>
+      </div>
+
+      <div class="painel acervo" id="acervo">
+        <div class="acervo-topo">
+          <div>
+            <h2>Acervo</h2>
+            <p>Gerencie os livros cadastrados.</p>
+          </div>
+
+          <input
+            type="search"
+            id="pesquisa"
+            placeholder="Pesquisar título ou autor"
+          >
+        </div>
+
+        <div id="listaLivros" class="lista-livros">
+          <div class="vazio">Nenhum livro encontrado.</div>
+        </div>
+      </div>
+
+    </section>
+
+    <footer>
+      Projeto didático • HTML, CSS e JavaScript
+    </footer>
+
+  </main>
+
+</body>
+</html>
