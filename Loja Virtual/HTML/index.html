@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Loja virtual de informática para demonstração de compras.">
+    <title>ByteStore | Loja de Informática</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="../index.html">BYTE<span>STORE</span></a>
+            <a class="back" href="../index.html">Voltar aos projetos ↗</a>
+        </div>
+    </header>
+
+    <div class="app">
+
+        <section class="hero">
+            <div>
+                <p class="eyebrow">TECNOLOGIA PARA O SEU DIA A DIA</p>
+                <h1>Monte seu setup.</h1>
+                <p>Encontre equipamentos, compare preços e simule sua compra.</p>
+            </div>
+            <div class="hero-emoji">⌘</div>
+        </section>
+
+        <main class="main">
+
+            <div id="aviso" class="feedback" role="status" aria-live="polite" hidden></div>
+
+            <section class="metrics">
+                <div class="metric">
+                    <span>Produtos no catálogo</span>
+                    <strong id="q-produtos">12</strong>
+                </div>
+                <div class="metric">
+                    <span>Itens no carrinho</span>
+                    <strong id="q-itens">0</strong>
+                </div>
+                <div class="metric">
+                    <span>Pedidos realizados</span>
+                    <strong id="q-pedidos">0</strong>
+                </div>
+            </section>
+
+            <div class="grid">
+
+                <section class="panel span-8">
+                    <div class="section-title">
+                        <div>
+                            <p class="section-label">NOSSO CATÁLOGO</p>
+                            <h2>Equipamentos</h2>
+                        </div>
+                        <p class="intro">Escolha seus produtos</p>
+                    </div>
+
+                    <div class="filters">
+                        <div class="field">
+                            <label for="busca">Pesquisar</label>
+                            <input id="busca" placeholder="Nome do produto...">
+                        </div>
+
+                        <div class="field">
+                            <label for="categoria">Categoria</label>
+                            <select id="categoria">
+                                <option value="">Todas</option>
+                                <option>Computadores</option>
+                                <option>Periféricos</option>
+                                <option>Armazenamento</option>
+                                <option>Redes</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="ordenacao">Ordenar por</label>
+                            <select id="ordenacao">
+                                <option value="nome">Nome (A–Z)</option>
+                                <option value="menor">Menor preço</option>
+                                <option value="maior">Maior preço</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="preco-max">Preço máximo</label>
+                            <select id="preco-max">
+                                <option value="99999">Qualquer preço</option>
+                                <option value="200">R$ 200</option>
+                                <option value="500">R$ 500</option>
+                                <option value="1500">R$ 1.500</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="produtos" class="product-grid"></div>
+                </section>
+
+                <aside class="panel span-4">
+                    <p class="section-label">SUA COMPRA</p>
+                    <h2>Meu carrinho <span class="cart-symbol">🛒</span></h2>
+                    <p class="intro">Confira seus produtos antes de finalizar.</p>
+
+                    <div id="carrinho" class="item-list"></div>
+
+                    <div class="separator"></div>
+
+                    <div class="field">
+                        <label for="entrega">Entrega</label>
+                        <select id="entrega">
+                            <option value="0">Retirar na loja — Grátis</option>
+                            <option value="12">Entrega local — R$ 12,00</option>
+                            <option value="25">Entrega regional — R$ 25,00</option>
+                        </select>
+                    </div>
+
+                    <div class="field coupon">
+                        <label for="cupom">Cupom de desconto</label>
+                        <div class="row">
+                            <input id="cupom" class="search-input" maxlength="18" placeholder="Seu cupom">
+                            <button id="aplicar-cupom" class="btn btn-secondary" type="button">Aplicar</button>
+                        </div>
+                        <p class="hint">Use ALUNO10 para ganhar 10% de desconto.</p>
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <div id="resumo" class="stack"></div>
+
+                    <form id="form-compra" class="stack purchase-form">
+                        <div class="field">
+                            <label for="comprador">Nome do comprador</label>
+                            <input id="comprador" required maxlength="70" placeholder="Digite seu nome">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Finalizar pedido →</button>
+                        <p class="hint">Compra demonstrativa. Nenhum pagamento será realizado.</p>
+                    </form>
+                </aside>
+
+                <section class="panel span-12 history">
+                    <div class="section-title">
+                        <div>
+                            <p class="section-label">SUAS COMPRAS</p>
+                            <h2>Histórico de pedidos</h2>
+                        </div>
+                        <button id="limpar-pedidos" class="btn btn-secondary btn-small" type="button">Limpar histórico</button>
+                    </div>
+
+                    <div id="historico" class="table-wrap"></div>
+                </section>
+
+            </div>
+
+        </main>
+    </div>
+    <script src="../JS/script.js" defer></script>
+</body>
+</html>
