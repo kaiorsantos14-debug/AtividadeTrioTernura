@@ -1,132 +1,143 @@
-const form = document.getElementById("formTarefa");
-const campoDescricao = document.getElementById("descricaoTarefa");
-const campoPrioridade = document.getElementById("prioridade");
-const lista = document.getElementById("listaTarefas");
-const filtro = document.getElementById("filtro");
-const mensagemVazia = document.getElementById("mensagemVazia");
+const form = document.getElementById("formLivro");
+const lista = document.getElementById("listaLivros");
+const pesquisa = document.getElementById("pesquisa");
+const mensagem = document.getElementById("mensagem");
 
-let tarefas = JSON.parse(localStorage.getItem("minhasTarefas")) || [];
+let livros = JSON.parse(localStorage.getItem("livros")) || [];
 
-function salvarTarefas() {
-  localStorage.setItem("minhasTarefas", JSON.stringify(tarefas));
+function salvar() {
+  localStorage.setItem("livros", JSON.stringify(livros));
 }
 
-function atualizarContadores() {
-  document.getElementById("total").textContent = tarefas.length;
-
-  const concluidas = tarefas.filter(tarefa => tarefa.concluida).length;
-
-  document.getElementById("concluidas").textContent = concluidas;
-  document.getElementById("pendentes").textContent =
-    tarefas.length - concluidas;
+function escapar(texto) {
+  return String(texto).replace(/[&<>"']/g, caractere => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[caractere]);
 }
 
-function renderizarTarefas() {
-  lista.innerHTML = "";
-
-  const tarefasFiltradas = tarefas.filter(tarefa => {
-    if (filtro.value === "pendentes") {
-      return !tarefa.concluida;
-    }
-
-    if (filtro.value === "concluidas") {
-      return tarefa.concluida;
-    }
-
-    return true;
-  });
-
-  mensagemVazia.style.display =
-    tarefasFiltradas.length === 0 ? "block" : "none";
-
-  tarefasFiltradas.forEach(tarefa => {
-    const item = document.createElement("li");
-    item.className = "tarefa";
-
-    if (tarefa.concluida) {
-      item.classList.add("feita");
-    }
-
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.checked = tarefa.concluida;
-    checkbox.setAttribute("aria-label", "Concluir tarefa");
-
-    checkbox.addEventListener("change", () => {
-      tarefa.concluida = checkbox.checked;
-      salvarTarefas();
-      renderizarTarefas();
-    });
-
-    const informacoes = document.createElement("div");
-    informacoes.className = "tarefa-info";
-
-    const titulo = document.createElement("strong");
-    titulo.textContent = tarefa.descricao;
-
-    const detalhe = document.createElement("small");
-    detalhe.textContent = "Prioridade: ";
-
-    const prioridade = document.createElement("span");
-    prioridade.textContent = tarefa.prioridade;
-    prioridade.className = "prioridade";
-
-    if (tarefa.prioridade === "Alta") {
-      prioridade.classList.add("alta");
-    } else if (tarefa.prioridade === "Média") {
-      prioridade.classList.add("media");
-    } else {
-      prioridade.classList.add("baixa");
-    }
-
-    detalhe.appendChild(prioridade);
-    informacoes.append(titulo, detalhe);
-
-    const botaoExcluir = document.createElement("button");
-    botaoExcluir.textContent = "Excluir";
-    botaoExcluir.className = "excluir";
-    botaoExcluir.setAttribute("aria-label", "Excluir tarefa");
-
-    botaoExcluir.addEventListener("click", () => {
-      tarefas = tarefas.filter(item => item.id !== tarefa.id);
-      salvarTarefas();
-      renderizarTarefas();
-    });
-
-    item.append(checkbox, informacoes, botaoExcluir);
-    lista.appendChild(item);
-  });
-
-  atualizarContadores();
+function avisar(texto) {
+  mensagem.textContent = texto;
+  mensagem.hidden = false;
 }
 
-form.addEventListener("submit", event => {
-  event.preventDefault();
+function atualizar() {
+  document.getElementById("total").textContent = livros.length;
 
-  const descricao = campoDescricao.value.trim();
+  document.getElementById("disponiveis").textContent =
+    livros.filter(livro => !livro.emprestado).length;
 
-  if (!descricao) {
-    campoDescricao.focus();
+  document.getElementById("emprestados").textContent =
+    livros.filter(livro => livro.emprestado).length;
+
+  mostrarLivros();
+  salvar();
+}
+
+function mostrarLivros() {
+  const termo = pesquisa.value.toLowerCase().trim();
+
+  const encontrados = livros.filter(livro =>
+    livro.titulo.toLowerCase().includes(termo) ||
+    livro.autor.toLowerCase().includes(termo)
+  );
+
+  if (encontrados.length === 0) {
+    lista.innerHTML =
+      '<div class="vazio">Nenhum livro encontrado.</div>';
     return;
   }
 
-  const novaTarefa = {
-    id: Date.now() + Math.random(),
-    descricao: descricao,
-    prioridade: campoPrioridade.value,
-    concluida: false
-  };
+  lista.innerHTML = encontrados.map(livro => `
+    <article class="livro">
+      <h3>${escapar(livro.titulo)}</h3>
+      <p>
+        <strong>Autor:</strong> ${escapar(livro.autor)}<br>
+        <strong>Categoria:</strong> ${escapar(livro.categoria)}
+      </p>
 
-  tarefas.push(novaTarefa);
+      <span class="status ${livro.emprestado ? "emprestado" : ""}">
+        ${livro.emprestado ? "Emprestado" : "Disponível"}
+      </span>
 
-  salvarTarefas();
-  renderizarTarefas();
+      <div class="acoes">
+        <button
+          data-acao="alternar"
+          data-id="${livro.id}"
+          class="${livro.emprestado ? "btn-devolver" : ""}"
+        >
+          ${livro.emprestado ? "Devolver" : "Emprestar"}
+        </button>
+
+        <button
+          class="btn-excluir"
+          data-acao="excluir"
+          data-id="${livro.id}"
+        >
+          Excluir
+        </button>
+      </div>
+    </article>
+  `).join("");
+}
+
+form.addEventListener("submit", function(evento) {
+  evento.preventDefault();
+
+  const titulo = document.getElementById("titulo").value.trim();
+  const autor = document.getElementById("autor").value.trim();
+  const categoria = document.getElementById("categoria").value;
+
+  if (!titulo || !autor) {
+    avisar("Preencha o título e o autor.");
+    return;
+  }
+
+  livros.push({
+    id: crypto.randomUUID(),
+    titulo,
+    autor,
+    categoria,
+    emprestado: false
+  });
 
   form.reset();
-  campoPrioridade.value = "Média";
-  campoDescricao.focus();
+  atualizar();
+  avisar("Livro cadastrado com sucesso!");
 });
 
-filtro.addEventListener("change", renderizarTarefas);
+pesquisa.addEventListener("input", mostrarLivros);
 
-renderizarTarefas();
+lista.addEventListener("click", function(evento) {
+  const botao = evento.target.closest("button[data-acao]");
+
+  if (!botao) return;
+
+  const id = botao.dataset.id;
+  const acao = botao.dataset.acao;
+  const livro = livros.find(item => item.id === id);
+
+  if (!livro) return;
+
+  if (acao === "alternar") {
+    livro.emprestado = !livro.emprestado;
+
+    avisar(
+      livro.emprestado
+        ? "Livro emprestado com sucesso!"
+        : "Livro devolvido com sucesso!"
+    );
+  }
+
+  if (acao === "excluir") {
+    livros = livros.filter(item => item.id !== id);
+    avisar("Livro excluído com sucesso!");
+  }
+
+  atualizar();
+});
+
+atualizar();

@@ -4,16 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minha Lista de Tarefas</title>
-  <link rel="stylesheet" href="../CSS/style.css">
-  <script src="../JS/script.js" defer></script>
+  <title>Controle de Biblioteca</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/script.js" defer></script>
 </head>
 <body>
 
   <header class="topo">
-    <div class="topo-conteudo">
-      <strong>Minha Lista</strong>
-      <span>Organize seu dia!</span>
+    <div class="container topo-conteudo">
+      <strong>Biblioteca Digital</strong>
+      <a href="#acervo">Ver acervo</a>
     </div>
   </header>
 
@@ -21,81 +21,91 @@
 
     <section class="banner">
       <div>
-        <p>ORGANIZAÇÃO PESSOAL</p>
-        <h1>Lista de Tarefas</h1>
-        <span>Pequenos passos, grandes resultados!</span>
+        <p>PROJETO HTML + CSS + JAVASCRIPT</p>
+        <h1>Controle de Biblioteca</h1>
+        <span>Cadastre, empreste e devolva livros.</span>
       </div>
-      <div class="icone">✓</div>
+      <div class="emoji">📚</div>
     </section>
 
-    <section class="resumo">
-      <div class="cartao-resumo">
-        <span>Tarefas cadastradas</span>
-        <strong id="total">0</strong>
+    <div id="mensagem" class="mensagem" hidden></div>
+
+    <section class="estatisticas">
+      <div class="card">
+        <span>Livros cadastrados</span>
+        <h2 id="total">0</h2>
       </div>
 
-      <div class="cartao-resumo">
-        <span>Concluídas</span>
-        <strong id="concluidas">0</strong>
+      <div class="card">
+        <span>Disponíveis</span>
+        <h2 id="disponiveis">0</h2>
       </div>
 
-      <div class="cartao-resumo">
-        <span>Pendentes</span>
-        <strong id="pendentes">0</strong>
+      <div class="card">
+        <span>Emprestados</span>
+        <h2 id="emprestados">0</h2>
       </div>
     </section>
 
     <section class="conteudo">
 
-      <div class="painel">
-        <h2>Nova tarefa</h2>
-        <p class="descricao">Cadastre suas atividades.</p>
+      <div class="painel cadastro">
+        <h2>Cadastrar livro</h2>
+        <p>Adicione títulos ao acervo da biblioteca.</p>
 
-        <form id="formTarefa">
-          <label for="descricaoTarefa">Descrição da tarefa</label>
+        <form id="formLivro">
+          <label for="titulo">Título</label>
           <input
             type="text"
-            id="descricaoTarefa"
-            placeholder="Ex.: Estudar JavaScript"
+            id="titulo"
+            placeholder="Título do livro"
             required
           >
 
-          <label for="prioridade">Prioridade</label>
-          <select id="prioridade">
-            <option value="Baixa">Baixa</option>
-            <option value="Média" selected>Média</option>
-            <option value="Alta">Alta</option>
+          <label for="autor">Autor</label>
+          <input
+            type="text"
+            id="autor"
+            placeholder="Nome do autor"
+            required
+          >
+
+          <label for="categoria">Categoria</label>
+          <select id="categoria">
+            <option>Programação</option>
+            <option>Romance</option>
+            <option>Fantasia</option>
+            <option>Educação</option>
+            <option>Outros</option>
           </select>
 
-          <button type="submit">+ Adicionar tarefa</button>
+          <button type="submit">Cadastrar livro</button>
         </form>
       </div>
 
-      <div class="painel painel-lista">
-        <div class="cabecalho-lista">
+      <div class="painel acervo" id="acervo">
+        <div class="acervo-topo">
           <div>
-            <h2>Minhas tarefas</h2>
-            <p class="descricao">Marque as tarefas concluídas.</p>
+            <h2>Acervo</h2>
+            <p>Gerencie os livros cadastrados.</p>
           </div>
 
-          <select id="filtro" aria-label="Filtrar tarefas">
-            <option value="todas">Todas</option>
-            <option value="pendentes">Pendentes</option>
-            <option value="concluidas">Concluídas</option>
-          </select>
+          <input
+            type="search"
+            id="pesquisa"
+            placeholder="Pesquisar título ou autor"
+          >
         </div>
 
-        <ul id="listaTarefas"></ul>
-
-        <p id="mensagemVazia" class="vazio">
-          Nenhuma tarefa nesta categoria.
-        </p>
+        <div id="listaLivros" class="lista-livros">
+          <div class="vazio">Nenhum livro encontrado.</div>
+        </div>
       </div>
 
     </section>
 
     <footer>
-      Lista de tarefas • Feita para organizar sua rotina ☀
+      Projeto didático • HTML, CSS e JavaScript
     </footer>
 
   </main>
