@@ -4,111 +4,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Controle de Biblioteca</title>
+  <title>Agenda de Serviços</title>
   <link rel="stylesheet" href="../css/style.css">
   <script src="../js/script.js" defer></script>
 </head>
 <body>
-
-  <header class="topo">
-    <div class="container topo-conteudo">
-      <strong>Biblioteca Digital</strong>
-      <a href="#acervo">Ver acervo</a>
-    </div>
+  <header>
+    <strong>Agenda Fácil</strong>
+    <a href="#agenda">Ver agendamentos →</a>
   </header>
 
-  <main class="container">
-
+  <main>
     <section class="banner">
       <div>
-        <p>PROJETO HTML + CSS + JAVASCRIPT</p>
-        <h1>Controle de Biblioteca</h1>
-        <span>Cadastre, empreste e devolva livros.</span>
+        <small>PROJETO HTML + CSS + JAVASCRIPT</small>
+        <h1>Agendamento de Serviços</h1>
+        <p>Organize seus horários de forma simples.</p>
       </div>
-      <div class="emoji">📚</div>
+      <span class="emoji">📅</span>
     </section>
 
-    <div id="mensagem" class="mensagem" hidden></div>
-
-    <section class="estatisticas">
+    <section class="stats">
       <div class="card">
-        <span>Livros cadastrados</span>
+        <p>Agendamentos</p>
         <h2 id="total">0</h2>
       </div>
-
       <div class="card">
-        <span>Disponíveis</span>
-        <h2 id="disponiveis">0</h2>
+        <p>Agendados para hoje</p>
+        <h2 id="hoje">0</h2>
       </div>
-
       <div class="card">
-        <span>Emprestados</span>
-        <h2 id="emprestados">0</h2>
+        <p>Serviços disponíveis</p>
+        <h2>4</h2>
       </div>
     </section>
 
-    <section class="conteudo">
+    <section class="content">
+      <div class="card formulario">
+        <h3>Novo agendamento</h3>
+        <p>Preencha os dados do cliente.</p>
 
-      <div class="painel cadastro">
-        <h2>Cadastrar livro</h2>
-        <p>Adicione títulos ao acervo da biblioteca.</p>
+        <form id="form">
+          <label for="cliente">Nome do cliente</label>
+          <input id="cliente" type="text" required
+                 placeholder="Digite o nome">
 
-        <form id="formLivro">
-          <label for="titulo">Título</label>
-          <input
-            type="text"
-            id="titulo"
-            placeholder="Título do livro"
-            required
-          >
-
-          <label for="autor">Autor</label>
-          <input
-            type="text"
-            id="autor"
-            placeholder="Nome do autor"
-            required
-          >
-
-          <label for="categoria">Categoria</label>
-          <select id="categoria">
-            <option>Programação</option>
-            <option>Romance</option>
-            <option>Fantasia</option>
-            <option>Educação</option>
-            <option>Outros</option>
+          <label for="servico">Serviço</label>
+          <select id="servico">
+            <option value="Corte de cabelo">Corte de cabelo — 30 min</option>
+            <option value="Barba">Barba — 30 min</option>
+            <option value="Manicure">Manicure — 60 min</option>
+            <option value="Massagem">Massagem — 60 min</option>
           </select>
 
-          <button type="submit">Cadastrar livro</button>
-        </form>
-      </div>
-
-      <div class="painel acervo" id="acervo">
-        <div class="acervo-topo">
-          <div>
-            <h2>Acervo</h2>
-            <p>Gerencie os livros cadastrados.</p>
+          <div class="campos">
+            <div>
+              <label for="data">Data</label>
+              <input id="data" type="date" required>
+            </div>
+            <div>
+              <label for="hora">Horário inicial</label>
+              <select id="hora" required></select>
+            </div>
           </div>
 
-          <input
-            type="search"
-            id="pesquisa"
-            placeholder="Pesquisar título ou autor"
-          >
-        </div>
+          <button type="submit">Confirmar agendamento</button>
+        </form>
 
-        <div id="listaLivros" class="lista-livros">
-          <div class="vazio">Nenhum livro encontrado.</div>
-        </div>
+        <small class="aviso">
+          Os horários ocupados ficam indisponíveis.
+        </small>
       </div>
 
+      <div class="card atendimentos" id="agenda">
+        <h3>Agenda de atendimentos</h3>
+        <p>Escolha uma data para consultar os horários.</p>
+
+        <label for="filtro">Filtrar data</label>
+        <input id="filtro" type="date">
+
+        <div id="lista" class="lista">
+          Nenhum agendamento nesta data.
+        </div>
+      </div>
     </section>
 
     <footer>
-      Projeto didático • HTML, CSS e JavaScript
+      Projeto demonstrativo • Agenda Fácil • Feito com HTML, CSS e JS
     </footer>
-
   </main>
-
 </body>
 </html>
