@@ -1,26 +1,60 @@
-"use strict";
-const $ = (sel) => document.querySelector(sel);
-const $$ = (sel) => [...document.querySelectorAll(sel)];
-const escapar = (valor) => String(valor ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
-const dinheiro = (valor) => Number(valor).toLocaleString("pt-BR", {style:"currency",currency:"BRL"});
-const carregar = (chave, padrao = []) => { try { const valor = JSON.parse(localStorage.getItem(chave)); return valor ?? padrao; } catch { return padrao; } };
-const salvar = (chave, dados) => localStorage.setItem(chave, JSON.stringify(dados));
-const idNovo = () => "id_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2,8);
-const hoje = () => { const d=new Date(); return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10); };
-function avisar(mensagem, tipo="success") { const el=$("#aviso"); if (!el) return; el.hidden=false; el.textContent=mensagem; el.className="feedback " + tipo; }
+let historico = [];
 
-let historico=[];
-$("#form-notas").addEventListener("submit", (evento)=>{
- evento.preventDefault();const notas=[1,2,3,4].map(n=>Number($("#nota"+n).value));
- if(notas.some(n=>!Number.isFinite(n)||n<0||n>10)){avisar("Informe notas válidas de 0 a 10.","error");return;}
- const media=notas.reduce((s,n)=>s+n,0)/notas.length;const aprovado=media>=6;
- const registro={nome:$("#nome").value.trim(),disciplina:$("#disciplina").value.trim(),notas,media,aprovado};
- if(!registro.nome||!registro.disciplina){avisar("Informe o nome e a disciplina.","error");return;}
- historico.unshift(registro);historico=historico.slice(0,5);renderizar(registro);avisar("Média calculada com sucesso!");
+document.getElementById("form-notas").addEventListener("submit", function(evento) {
+    evento.preventDefault();
+
+    let nome = document.getElementById("nome").value;
+    let disciplina = document.getElementById("disciplina").value;
+
+    let nota1 = Number(document.getElementById("nota1").value);
+    let nota2 = Number(document.getElementById("nota2").value);
+    let nota3 = Number(document.getElementById("nota3").value);
+    let nota4 = Number(document.getElementById("nota4").value);
+
+    if (nota1 < 0 || nota1 > 10 || nota2 < 0 || nota2 > 10 ||
+        nota3 < 0 || nota3 > 10 || nota4 < 0 || nota4 > 10) {
+        document.getElementById("aviso").innerHTML = "Digite notas de 0 a 10!";
+        document.getElementById("aviso").hidden = false;
+        return;
+    }
+
+    let media = (nota1 + nota2 + nota3 + nota4) / 4;
+    let situacao = "Reprovado";
+
+    if (media >= 6) {
+        situacao = "Aprovado";
+    }
+
+    document.getElementById("m-contagem").innerHTML = "4";
+    document.getElementById("m-media").innerHTML = media.toFixed(1).replace(".", ",");
+    document.getElementById("m-situacao").innerHTML = situacao;
+
+    document.getElementById("resultado").innerHTML =
+        "<h3>" + nome + "</h3>" +
+        "<p>Disciplina: " + disciplina + "</p>" +
+        "<p>Notas: " + nota1 + ", " + nota2 + ", " + nota3 + ", " + nota4 + "</p>" +
+        "<p>Média: " + media.toFixed(1).replace(".", ",") + "</p>" +
+        "<p>Situação: " + situacao + "</p>";
+
+    historico.unshift(nome + " - " + disciplina + " - Média: " + media.toFixed(1));
+
+    if (historico.length > 5) {
+        historico.pop();
+    }
+
+    let lista = "";
+
+    for (let i = 0; i < historico.length; i++) {
+        lista += "<p>" + historico[i] + "</p>";
+    }
+
+    document.getElementById("historico").innerHTML = lista;
+
+    document.getElementById("aviso").innerHTML = "Média calculada!";
+    document.getElementById("aviso").hidden = false;
 });
-$("#form-notas").addEventListener("reset",()=>avisar("Campos limpos. O último resultado continua visível.","success"));
-function renderizar(r){
- $("#m-contagem").textContent=r.notas.length;$("#m-media").textContent=r.media.toFixed(1).replace(".",",");$("#m-situacao").textContent=r.aprovado?"Aprovado":"Reprovado";
- $("#resultado").className="item";$("#resultado").innerHTML=`<div class="row between"><strong>${escapar(r.nome)}</strong><span class="pill ${r.aprovado?"success":"danger"}">${r.aprovado?"Aprovado":"Reprovado"}</span></div><p class="muted">${escapar(r.disciplina)}</p><p>Notas: ${r.notas.map(n=>n.toFixed(1).replace(".",",")).join(" • ")}</p><div class="total"><span>Média final</span><strong>${r.media.toFixed(1).replace(".",",")}</strong></div>`;
- $("#historico").innerHTML=historico.map(h=>`<div class="item"><strong>${escapar(h.nome)}</strong> — ${escapar(h.disciplina)} <span class="pill ${h.aprovado?"success":"danger"}">${h.media.toFixed(1).replace(".",",")}</span></div>`).join("");
-}
+
+document.getElementById("form-notas").addEventListener("reset", function() {
+    document.getElementById("aviso").innerHTML = "Campos limpos!";
+    document.getElementById("aviso").hidden = false;
+});
