@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Projeto educacional Front-end: Calculadora de Notas. Interface integralmente em português brasileiro.">
+    <title>Calculadora de Notas</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="../index.html">Laboratório Front-end</a>
+            <a class="back" href="../index.html">Ver os nove projetos</a>
+        </div>
+    </header>
+    <div class="app">
+        <section class="hero">
+            <div>
+                <h1>Calculadora de Notas</h1>
+                <p>Calcule médias e acompanhe a situação escolar.</p>
+            </div>
+            <div class="hero-emoji" aria-hidden="true"></div>
+        </section>
+        <main class="main">
+            <div id="aviso" class="feedback" role="status" aria-live="polite" hidden></div>
+            <div class="metrics">
+                <div class="metric">
+                    <span>Notas informadas</span>
+                    <strong id="m-contagem">0</strong>
+                </div>
+                <div class="metric">
+                    <span>Média calculada</span>
+                    <strong id="m-media">—</strong>
+                </div>
+                <div class="metric">
+                    <span>Situação</span>
+                    <strong id="m-situacao">—</strong>
+                </div>
+            </div>
+            <div class="grid">
+                <section class="panel span-5">
+                    <h2>Informe as notas</h2>
+
+                    <p class="intro">
+                        Digite quatro notas de 0 a 10.
+                        Média mínima para aprovação: 6,0.
+                    </p>
+                    <form id="form-notas" class="stack">
+
+                        <div class="form-grid">
+
+                            <div class="field">
+                                <label for="nome">Nome do estudante</label>
+                                <input id="nome" maxlength="70" placeholder="Ex.: Ana Silva" required>
+                            </div>
+
+                            <div class="field">
+                                <label for="disciplina">Disciplina</label>
+                                <input id="disciplina" maxlength="60" placeholder="Ex.: Desenvolvimento Web" required>
+                            </div>
+
+                            <div class="field">
+                                <label for="nota1">1ª nota</label>
+                                <input id="nota1" inputmode="decimal" type="number" min="0" max="10" step="0.1" required>
+                            </div>
+
+                            <div class="field">
+                                <label for="nota2">2ª nota</label>
+                                <input id="nota2" inputmode="decimal" type="number" min="0" max="10" step="0.1" required>
+                            </div>
+
+                            <div class="field">
+                                <label for="nota3">3ª nota</label>
+                                <input id="nota3" inputmode="decimal" type="number" min="0" max="10" step="0.1" required>
+                            </div>
+
+                            <div class="field">
+                                <label for="nota4">4ª nota</label>
+                                <input id="nota4" inputmode="decimal" type="number" min="0" max="10" step="0.1" required>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <button class="btn btn-primary" type="submit">Calcular média</button>
+                            <button class="btn btn-secondary" type="reset">Limpar campos</button>
+                        </div>
+
+                    </form>
+
+                </section>
+
+                <section class="panel span-7">
+
+                    <h2>Resultado do cálculo</h2>
+
+                    <p class="intro">
+                        O boletim é atualizado após o cálculo das notas.
+                    </p>
+
+                    <div id="resultado" class="empty">
+                        Preencha o formulário para ver o boletim do estudante.
+                    </div>
+
+                    <h3>Últimos cálculos desta sessão</h3>
+
+                    <div id="historico" class="item-list">
+                        <div class="muted">Ainda não há cálculos.</div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <p class="footer">Demonstração didática • Os dados, quando armazenados,ficam apenas neste navegador • Interface em português brasileiro
+        </p>
+    </div>
+<script src="../JS/script.js" defer></script>
+</body>
+</html>

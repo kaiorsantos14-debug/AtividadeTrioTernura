@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Projeto educacional Front-end: Gestão Acadêmica. Interface em português brasileiro.">
+    <title>Gestão Acadêmica | Projetos Front-end</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="../index.html">Laboratório Front-end</a>
+            <a class="back" href="../index.html"> Ver os nove projetos</a>
+        </div>
+    </header>
+
+    <div class="app">
+
+        <section class="hero">
+            <div>
+                <div class="eyebrow">Projeto simples • HTML + CSS + JavaScript</div>
+                <h1>Gestão Acadêmica</h1>
+                <p>Organize turmas, estudantes, notas e frequência.</p>
+            </div>
+
+            <div class="hero-emoji" aria-hidden="true">🎓</div>
+        </section>
+
+        <main class="main">
+
+            <div id="aviso" class="feedback" role="status" aria-live="polite" hidden></div>
+
+            <div class="metrics">
+
+                <div class="metric">
+                    <span>Turmas</span>
+                    <strong id="q-turmas">0</strong>
+                </div>
+
+                <div class="metric">
+                    <span>Estudantes</span>
+                    <strong id="q-estudantes">0</strong>
+                </div>
+
+                <div class="metric">
+                    <span>Avaliações aprovadas</span>
+                    <strong id="q-aprovados">0</strong>
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <nav class="tabbar" aria-label="Seções do sistema">
+                    <button class="tab active" type="button" data-aba="turmas">Turmas</button>
+                    <button class="tab" type="button" data-aba="estudantes">Estudantes</button>
+                    <button class="tab" type="button" data-aba="avaliacoes">Notas e frequência</button>
+                    <button class="tab" type="button" data-aba="relatorios">Relatórios</button>
+                </nav>
+
+                <section id="aba-turmas" class="aba">
+
+                    <div class="grid">
+
+                        <div class="span-4">
+                            <h2>Cadastrar turma</h2>
+                            <p class="intro">Comece criando uma turma.</p>
+
+                            <form id="form-turma" class="stack">
+
+                                <div class="field">
+                                    <label for="nome-turma">Nome da turma</label>
+                                    <input id="nome-turma" maxlength="60" required placeholder="Ex.: Informática 2026">
+                                </div>
+
+                                <div class="field">
+                                    <label for="turno">Turno</label>
+                                    <select id="turno">
+                                        <option>Manhã</option>
+                                        <option>Tarde</option>
+                                        <option>Noite</option>
+                                    </select>
+                                </div>
+
+                                <button class="btn btn-primary" type="submit">Cadastrar turma</button>
+
+                            </form>
+                        </div>
+
+                        <div class="span-8">
+                            <h2>Turmas cadastradas</h2>
+                            <p class="intro">Edite ou exclua turmas sem estudantes vinculados.</p>
+                            <div id="lista-turmas" class="item-list"></div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <section id="aba-estudantes" class="aba" hidden>
+
+                    <div class="grid">
+
+                        <div class="span-4">
+                            <h2>Cadastrar estudante</h2>
+                            <p class="intro">Associe cada estudante à turma correta.</p>
+
+                            <form id="form-estudante" class="stack">
+
+                                <div class="field">
+                                    <label for="nome-estudante">Nome completo</label>
+                                    <input id="nome-estudante" maxlength="80" required>
+                                </div>
+
+                                <div class="field">
+                                    <label for="matricula">Matrícula</label>
+                                    <input id="matricula" maxlength="20" required>
+                                </div>
+
+                                <div class="field">
+                                    <label for="turma-estudante">Turma</label>
+                                    <select id="turma-estudante" required></select>
+                                </div>
+
+                                <button class="btn btn-primary" type="submit">Cadastrar estudante</button>
+
+                            </form>
+                        </div>
+
+                        <div class="span-8">
+                            <h2>Estudantes cadastrados</h2>
+                            <div id="lista-estudantes" class="item-list"></div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <section id="aba-avaliacoes" class="aba" hidden>
+
+                    <div class="grid">
+
+                        <div class="span-5">
+                            <h2>Lançar avaliação</h2>
+                            <p class="intro">Média mínima: 6,0. Frequência mínima: 75%.</p>
+
+                            <form id="form-avaliacao" class="stack">
+
+                                <div class="field">
+                                    <label for="aluno-avaliacao">Estudante</label>
+                                    <select id="aluno-avaliacao" required></select>
+                                </div>
+
+                                <div class="field">
+                                    <label for="disciplina">Unidade curricular</label>
+                                    <input id="disciplina" maxlength="80" required placeholder="Ex.: Projeto Front-end">
+                                </div>
+
+                                <div class="form-grid">
+
+                                    <div class="field">
+                                        <label for="n1">Nota 1</label>
+                                        <input id="n1" type="number" min="0" max="10" step="0.1" required>
+                                    </div>
+
+                                    <div class="field">
+                                        <label for="n2">Nota 2</label>
+                                        <input id="n2" type="number" min="0" max="10" step="0.1" required>
+                                    </div>
+
+                                </div>
+
+                                <div class="field">
+                                    <label for="freq">Frequência (%)</label>
+                                    <input id="freq" type="number" min="0" max="100" step="1" value="100" required>
+                                </div>
+
+                                <button class="btn btn-primary" type="submit">Salvar avaliação</button>
+
+                            </form>
+                        </div>
+
+                        <div class="span-7">
+                            <h2>Avaliações registradas</h2>
+                            <p class="intro">Um registro por estudante e unidade curricular. Ao enviar novamente, o registro existente é atualizado.</p>
+                            <div id="lista-avaliacoes" class="item-list"></div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <section id="aba-relatorios" class="aba" hidden>
+
+                    <div class="row between">
+
+                        <div>
+                            <h2>Relatório de desempenho</h2>
+                            <p class="intro">Consulte as notas, a frequência e a situação acadêmica.</p>
+                        </div>
+
+                        <button id="exportar" class="btn btn-secondary btn-small" type="button">Baixar relatório CSV</button>
+
+                    </div>
+
+                    <div class="field" style="max-width: 300px; margin-bottom: 15px;">
+                        <label for="filtro-turma">Filtrar por turma</label>
+                        <select id="filtro-turma">
+                            <option value="">Todas as turmas</option>
+                        </select>
+                    </div>
+
+                    <div id="tabela-relatorio" class="table-wrap"></div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+        <p class="footer">
+            Demonstração didática • Os dados, quando armazenados, ficam apenas neste navegador • Interface em português brasileiro
+        </p>
+
+    </div>
+  <script src="../JS/script.js" defer></script>
+</body>
+</html>
