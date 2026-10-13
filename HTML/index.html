@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Lista de Tarefas</title>
+  <link rel="stylesheet" href="../CSS/style.css">
+  <script src="../JS/script.js" defer></script>
+</head>
+<body>
+
+  <header class="topo">
+    <div class="topo-conteudo">
+      <strong>Minha Lista</strong>
+      <span>Organize seu dia!</span>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="banner">
+      <div>
+        <p>ORGANIZAÇÃO PESSOAL</p>
+        <h1>Lista de Tarefas</h1>
+        <span>Pequenos passos, grandes resultados!</span>
+      </div>
+      <div class="icone">✓</div>
+    </section>
+
+    <section class="resumo">
+      <div class="cartao-resumo">
+        <span>Tarefas cadastradas</span>
+        <strong id="total">0</strong>
+      </div>
+
+      <div class="cartao-resumo">
+        <span>Concluídas</span>
+        <strong id="concluidas">0</strong>
+      </div>
+
+      <div class="cartao-resumo">
+        <span>Pendentes</span>
+        <strong id="pendentes">0</strong>
+      </div>
+    </section>
+
+    <section class="conteudo">
+
+      <div class="painel">
+        <h2>Nova tarefa</h2>
+        <p class="descricao">Cadastre suas atividades.</p>
+
+        <form id="formTarefa">
+          <label for="descricaoTarefa">Descrição da tarefa</label>
+          <input
+            type="text"
+            id="descricaoTarefa"
+            placeholder="Ex.: Estudar JavaScript"
+            required
+          >
+
+          <label for="prioridade">Prioridade</label>
+          <select id="prioridade">
+            <option value="Baixa">Baixa</option>
+            <option value="Média" selected>Média</option>
+            <option value="Alta">Alta</option>
+          </select>
+
+          <button type="submit">+ Adicionar tarefa</button>
+        </form>
+      </div>
+
+      <div class="painel painel-lista">
+        <div class="cabecalho-lista">
+          <div>
+            <h2>Minhas tarefas</h2>
+            <p class="descricao">Marque as tarefas concluídas.</p>
+          </div>
+
+          <select id="filtro" aria-label="Filtrar tarefas">
+            <option value="todas">Todas</option>
+            <option value="pendentes">Pendentes</option>
+            <option value="concluidas">Concluídas</option>
+          </select>
+        </div>
+
+        <ul id="listaTarefas"></ul>
+
+        <p id="mensagemVazia" class="vazio">
+          Nenhuma tarefa nesta categoria.
+        </p>
+      </div>
+
+    </section>
+
+    <footer>
+      Lista de tarefas • Feita para organizar sua rotina ☀
+    </footer>
+
+  </main>
+
+</body>
+</html>
